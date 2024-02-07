@@ -12,7 +12,7 @@
 	<groupId>br.com.example</groupId>
 	<artifactId>kafka-shop-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>kafka</name>
+	<name>kafka-shop-api</name>
 	<description>This project is to improve my experience with Kafka</description>
 	<properties>
 		<maven.compiler.source>8</maven.compiler.source>
