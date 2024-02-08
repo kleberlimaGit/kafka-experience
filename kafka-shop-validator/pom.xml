@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.example</groupId>
-	<artifactId>kafka</artifactId>
+	<artifactId>kafka-shop-validator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>kafka-shop-validator</name>
 		<description>This project is to improve my experience with Kafka</description>
