@@ -1,11 +1,13 @@
 package br.com.example.kafka.entities;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,31 +15,32 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import br.com.example.kafka.entities.dto.ShopDTO;
+import br.com.example.kafka.entities.enums.Status;
 
-public class Shop {
-	
+@Entity
+public class Shop implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String identifier;
-	
-	private String status;
+
+	private Status status;
+
 	@Column(name = "date_shop")
-	
-	private LocalDate dateShop;
-	
-	@OneToMany(fetch = FetchType.EAGER,
-	cascade = CascadeType.ALL,
-	mappedBy = "shop")
-	private List<ShopItem> items;
-	
+	private LocalDateTime dateShop;
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "shop")
+	private List<ShopItem> items = new ArrayList<>();
+
 	public static Shop convert(ShopDTO shopDTO) {
 		Shop shop = new Shop();
 		shop.setIdentifier(shopDTO.getIdentifier());
-		shop.setStatus(shopDTO.getStatus());
 		shop.setDateShop(shopDTO.getDateShop());
-		shopDTO.getItems().forEach(x -> shop.addItem(ShopItem.convert(x)));
+		shop.setStatus(shopDTO.getStatus());
+		shopDTO.getItems().forEach(x -> shop.getItems().add(ShopItem.convert(x, shop)));
 		return shop;
 	}
 
@@ -57,28 +60,23 @@ public class Shop {
 		this.identifier = identifier;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
-	public LocalDate getDateShop() {
+	public LocalDateTime getDateShop() {
 		return dateShop;
 	}
 
-	public void setDateShop(LocalDate dateShop) {
+	public void setDateShop(LocalDateTime dateShop) {
 		this.dateShop = dateShop;
 	}
 
 	public List<ShopItem> getItems() {
 		return items;
 	}
-
-	public void addItem(ShopItem item) {
-		getItems().add(item);
-	}
-	
 }

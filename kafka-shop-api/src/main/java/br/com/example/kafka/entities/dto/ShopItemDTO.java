@@ -1,6 +1,6 @@
 package br.com.example.kafka.entities.dto;
 
-import br.com.example.kafka.entities.Shop;
+import br.com.example.kafka.entities.ShopItem;
 
 public class ShopItemDTO {
 
@@ -10,8 +10,19 @@ public class ShopItemDTO {
 	
 	private Float price;
 	
-	private Shop shop;
-
+	private Long idShop;
+	
+	
+	public static ShopItemDTO convert(ShopItem shopItem, Long idShop) {
+		ShopItemDTO shopItemDTO = new ShopItemDTO();
+		shopItemDTO.setProductIdentifier(
+		shopItem.getProductIdentifier());
+		shopItemDTO.setAmount(shopItem.getAmount());
+		shopItemDTO.setPrice(shopItem.getPrice());
+		shopItemDTO.setIdShop(idShop);
+		return shopItemDTO;
+		}
+	
 	public String getProductIdentifier() {
 		return productIdentifier;
 	}
@@ -36,12 +47,12 @@ public class ShopItemDTO {
 		this.price = price;
 	}
 
-	public Shop getShop() {
-		return shop;
+	public Long getIdShop() {
+		return idShop;
 	}
 
-	public void setShop(Shop shop) {
-		this.shop = shop;
+	public void setIdShop(Long idShop) {
+		this.idShop = idShop;
 	}
 	
 	

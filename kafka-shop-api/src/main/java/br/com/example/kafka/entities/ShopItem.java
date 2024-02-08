@@ -1,7 +1,10 @@
 package br.com.example.kafka.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,7 +14,9 @@ import javax.persistence.ManyToOne;
 import br.com.example.kafka.entities.dto.ShopItemDTO;
 
 @Entity(name = "shop_item")
-public class ShopItem {
+public class ShopItem implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -23,15 +28,16 @@ public class ShopItem {
 	
 	private Float price;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "shop_id")
 	private Shop shop;
 
-	public static ShopItem convert(ShopItemDTO shopItemDTO) {
+	public static ShopItem convert(ShopItemDTO shopItemDTO, Shop shop) {
 		ShopItem shopItem = new ShopItem();
 		shopItem.setProductIdentifier(shopItemDTO.getProductIdentifier());
 		shopItem.setAmount(shopItemDTO.getAmount());
 		shopItem.setPrice(shopItemDTO.getPrice());
+		shopItem.setShop(shop);
 		return shopItem;
 	}
 
