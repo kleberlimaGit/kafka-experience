@@ -21,7 +21,7 @@ public class ShopDTO {
 		shopDTO.setIdentifier(shop.getIdentifier());
 		shopDTO.setDateShop(shop.getDateShop());
 		shopDTO.setStatus(shop.getStatus());
-		shop.getItems().forEach(x -> shopDTO.getItems().add(ShopItemDTO.convert(x,shop.getId())));
+		shop.getItems().forEach(x -> shopDTO.getItems().add(ShopItemDTO.convert(x)));
 		return shopDTO;
 	}
 	
